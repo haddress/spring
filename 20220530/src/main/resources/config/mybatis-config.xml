@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- spring을 안쓰면 여기 안에 환경설정을 해야함 -->
+<!-- 값을 넣지 않아도 mybatis가 알아서 null값으로 인식하도록 설정 -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+</configuration>
