@@ -12,4 +12,5 @@ public interface StudentMapper { // Mybatis에서 사용하는 인터페이스
 	int studentDelete(StudentVO vo); // 회원삭제
 	
 	boolean idCheck(String id); // 아이디 중복 체크
+	// 변수 이름은 student-map.xml의 EL표현식 이름과 동일하게 정의해주어야함
 }
