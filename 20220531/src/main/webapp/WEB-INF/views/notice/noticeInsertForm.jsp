@@ -15,17 +15,17 @@
 					<table border="1">
 						<tr>
 							<th>작성자</th>
-							<td width="200"><input type="text" id="noticeName" name="noticeName" value="${name }" size="25"></td>
+							<td width="100"><input type="text" id="noticeName" name="noticeName" value="${name }" size="25"></td>
 							<th>작성일자</th>
-							<td width="200"><input type="date" id="noticeDate" name="noticeDate" width="200"></td>						
+							<td width="100"><input type="date" id="noticeDate" name="noticeDate" width="200"></td>						
 						</tr>
 						<tr>
 							<th>제 목</th>
-							<td colspan="3"><input type="text" id="noticeTitle" name="noticeTitle" size="68"></td>
+							<td colspan="3"><input type="text" id="noticeTitle" name="noticeTitle" size="58"></td>
 						</tr>
 						<tr>
 							<th>내 용</th>
-							<td colspan="3"><textarea id="noticeContents" name="noticeContents" cols="70" rows="15"></textarea></td>
+							<td colspan="3"><textarea id="noticeContents" name="noticeContents" cols="60" rows="15"></textarea></td>
 						</tr>
 						<tr>
 							<th>첨부파일</th>

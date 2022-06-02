@@ -37,9 +37,24 @@
 				ELSE 1 END AS ID FROM NOTICE
 		</selectKey>
 		
-		INSERT INTO NOTICE
+		<!-- INSERT INTO NOTICE
 		VALUES(#{noticeId}, #{noticeName}, #{noticeTitle}, #{noticeContents}, 
-				#{noticeDate}, 0, #{noticeAttech}, #{noticeDir})
+				#{noticeDate}, 0, #{noticeAttech}, #{noticeDir}) -->
+				
+		INSERT INTO NOTICE (notice_id, notice_name, notice_title, notice_contents, notice_date, notice_hit
+				<if test="noticeAttech != null">, notice_attech, </if>
+				<if test="noticeDir != null">notice_dir</if>
+		)
+		VALUES(
+				<if test="noticeId != null">#{noticeId}, </if>
+				<if test="noticeName != null">#{noticeName}, </if>
+				<if test="noticeTitle != null">#{noticeTitle}, </if>
+				<if test="noticeContents != null">#{noticeContents}, </if>
+				<if test="noticeDate != null">#{noticeDate}, </if>
+				<if test="noticeHit != null">0 </if>
+				<if test="noticeAttech != null">, #{noticeAttech}, </if>
+				<if test="noticeDir != null">#{noticeDir}</if>
+			)
 	</insert>
 	
 	<update id="noticeUpdate" parameterType="co.micol.prj.notice.vo.NoticeVO">
