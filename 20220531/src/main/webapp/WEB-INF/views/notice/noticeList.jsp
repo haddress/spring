@@ -106,6 +106,7 @@ table tr:hover {
 					td.append(n.noticeDate);
 					td.append(n.noticeHit);
 					td.append(n.noticeAttech);
+					tr.append(td);
 				})
 			})
 		}
