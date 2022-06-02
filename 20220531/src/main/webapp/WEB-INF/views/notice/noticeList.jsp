@@ -9,8 +9,8 @@
 </head>
 <style>
 table tr:hover {
-	cursor:pointer;
-	background:#ddd;
+	cursor: pointer;
+	background: #ddd;
 }
 </style>
 <body>
@@ -66,15 +66,15 @@ table tr:hover {
 				<form id="frm2" method="post">
 					<input type="hidden" id="noticeId" name="noticeId">
 				</form>
-			<div>
-			</div>
-				<button type="button" onclick="location.href='noticeInsertForm.do'">글 등록</button>
+				<div></div>
+				<button type="button" onclick="location.href='noticeInsertForm.do'">글
+					등록</button>
 			</div>
 		</div>
 	</div>
 </body>
 
-	<!-- 그룹이벤트 생성(상세조회) -->
+<!-- 그룹이벤트 생성(상세조회) -->
 <script>
 	let list = document.querySelector('tbody');
 	list.addEventListener('click', function(ev) {
@@ -86,7 +86,7 @@ table tr:hover {
 			frm2.submit();
 		}
 	})
-</script>	
+</script>
 <script type="text/javascript">
 	function searchList() {
 		let list = document.querySelector('tbody');
@@ -97,19 +97,22 @@ table tr:hover {
 		.then(response => response.json())
 		.then(data => {
 				list.remove();
-				document.createElement('tr');
-				data.forEach(n=> {
-					console.log(n.noticeId);
-					td.append(n.noticeId);
-					td.append(n.noticeName);
-					td.append(n.noticeTitle);
-					td.append(n.noticeDate);
-					td.append(n.noticeHit);
-					td.append(n.noticeAttech);
-					tr.append(td);
-				})
+				data.forEach(n => {
+					console.log(makeTr(n));
+					list.append(makeTr(n));
 			})
+		})
+	}
+		
+	function makeTr(obj) {
+		let tr = document.createElement('tr');
+		for (let field in obj) {
+			let td = document.createElement('td');			
+			td.innerHTML = obj[field];
+			tr.append(td);
 		}
+		return tr;
+	}
 	
 	
 </script>
