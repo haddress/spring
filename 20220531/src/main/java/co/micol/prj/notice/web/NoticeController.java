@@ -148,6 +148,7 @@ public class NoticeController {
 		return "redirect:noticeList.do";
 	}
 	
+	// 검색
 	@PostMapping("/ajaxSearchList.do")
 	@ResponseBody
 	public List<NoticeVO> ajaxSearchList(@RequestParam("state") int state, @RequestParam("key") String key) {

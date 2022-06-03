@@ -1,4 +1,4 @@
-package co.micol.prj;
+package co.hj.prj;
 
 import java.util.Locale;
 
@@ -16,7 +16,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("환영합니다 {}.", locale);
+		logger.info("Welcome! {}.", locale);
 		
 		return "home/home";
 	}
@@ -24,11 +24,6 @@ public class HomeController {
 	@RequestMapping("/home.do")
 	public String home() {
 		return "home/home";
-	}
-	
-	@RequestMapping("/admin.do")
-	public String admin() {
-		return "admin";
 	}
 	
 }

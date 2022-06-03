@@ -6,13 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
+<script type="text/javascript" src="resources/jquery-3.6.0.min.js"></script>
 <style>
 table tr:hover {
 	cursor: pointer;
 	background: #ddd;
 }
 </style>
+</head>
 <body>
 	<div align="center">
 		<div>
@@ -45,7 +46,7 @@ table tr:hover {
 				<tbody>
 					<c:if test="${!empty notices }">
 						<c:forEach items="${notices }" var="n">
-							<tr>
+							<tr onclick="eventList(${n.noticeId })">
 								<td>${n.noticeId }</td>
 								<td>${n.noticeName }</td>
 								<td>${n.noticeTitle }</td>
@@ -76,19 +77,60 @@ table tr:hover {
 
 <!-- 그룹이벤트 생성(상세조회) -->
 <script>
-	let list = document.querySelector('tbody');
-	list.addEventListener('click', function(ev) {
-		if (ev.target.tagName === 'TD') {
-			//console.log(ev.target.parentNode.children[0].textContent);
-			//location.href = 'getContent.do?noticeId='+ev.target.parentNode.children[0].textContent;
-			frm2.noticeId.value = ev.target.parentNode.children[0].textContent;
-			frm2.action="getContent.do";
-			frm2.submit();
-		}
-	})
+	function eventList(n) {
+		//let list = document.querySelector('tbody');
+		//list.addEventListener('click', function(ev) {
+		//	if (ev.target.tagName === 'TD') {
+				//console.log(ev.target.parentNode.children[0].textContent);
+				//location.href = 'getContent.do?noticeId='+ev.target.parentNode.children[0].textContent;
+				frm2.noticeId.value = n;
+				frm2.action="getContent.do";
+				frm2.submit();
+		//	}
+		//});
+	}
+	
+	function searchList() {
+		let state = $('#state').val(); // let state=document.getElementById("state").value
+		let key = $('#key').val();
+		
+		// ajax의 기본타입
+		$.ajax({
+			url : "ajaxSearchList.do",
+			type : "post", // 전송방식 (생략시 get)
+			data : {"state" : state, "key" : key}, // 전달할 데이터
+			dataType : "json", // 돌려받을 결과의 데이터 타입 (html, text, xml, json, jsonp)
+			success : function(result) { // 성공했을때 실행할 함수 결과는 result에 담김
+				// 수행할 영역 -> 콜백함수 만들기
+				if(data.length>0) {
+					htmlConvert(result);
+				}
+			},
+			error : function() { // 실패했을때 수행할 함수
+				alert('의도치 않은 오류가 발생했습니다.');
+			}
+		});
+	}
+	
+	function htmlConvert(data) {
+		$('tbody').remove(); // tbody 삭제
+		let tbody = $('<tbody/>');
+		$.each(data,function(index, n){ // 배열형태인 data로 each(반복), n이 한 행 이름
+			var row = $("<tr onclick='eventList("+n.noticeId+")'/>").append(
+				$("<td/>").text(n.noticeId),		
+				$("<td/>").text(n.noticeName),		
+				$("<td/>").text(n.noticeTitle),		
+				$("<td/>").text(n.noticeDate),		
+				$("<td/>").text(n.noticeHit),		
+				$("<td/>").text(n.noticeAttech)
+			);
+			tbody.append(row); // 행 추가
+		});
+		$('#tb').append(tbody);
+	}
 </script>
 <script type="text/javascript">
-	function searchList() {
+	/* function searchList() {
 		let list = document.querySelector('tbody');
 		fetch('ajaxSearchList.do', {
 			method: 'POST',
@@ -96,24 +138,39 @@ table tr:hover {
 		})
 		.then(response => response.json())
 		.then(data => {
-				list.remove();
+				//list.remove();
+				makeTr(data);
 				data.forEach(n => {
-					console.log(makeTr(n));
-					list.append(makeTr(n));
+					//console.log(makeTr(n));
+					//list.append(makeTr(n));
+					
+					
 			})
 		})
-	}
-		
-	function makeTr(obj) {
-		let tr = document.createElement('tr');
-		for (let field in obj) {
+	} */
+	
+	function makeTr(dataList) {
+		/* let tr = document.createElement('tr');
+		for (let field of obj) {
 			let td = document.createElement('td');			
 			td.innerHTML = obj[field];
 			tr.append(td);
 		}
-		return tr;
+		return tr; */
+		let list = document.querySelector('tbody');
+		let arr = ['noticeId', 'noticeName', 'noticeTitle', 'noticeDate', 'noticeHit', 'noticeAttech'];
+		
+		list.innerHTML = '';
+		for(let data of dataList) {
+			let mtr = document.createElement('tr');
+			arr.forEach(v => {
+				let mtd = document.createElement('td');
+				mtd.innerText = data[v];
+				mtr.appendChild(mtd);
+			})
+			list.appendChild(mtr);
+		}
 	}
-	
 	
 </script>
 </html>

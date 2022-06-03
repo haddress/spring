@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.hj.prj.board.service.BoardMapper">
+
+	<resultMap id="boardMap" type="co.hj.prj.board.vo.BoardVO">
+		<id property="boardId" column="board_id" />
+		<result property="boardName" column="board_name" />
+		<result property="boardTitle" column="board_title" />
+		<result property="boardContent" column="board_content" />
+		<result property="boardDate" column="board_date" />
+		<result property="boardHit" column="board_hit" />
+	</resultMap>
+	
+	<select id="boardList" resultMap="boardMap">
+		select * from board
+		where
+		<if test="state == 1">1=1</if>
+		<if test="state == 2">board_title like '%'||#{key}||'%'</if>
+		<if test="state == 3">board_name like '%'||#{key}||'%'</if>
+		order by board_id desc
+	</select>
+	
+	
+	<select id="boardSelect" resultMap="boardMap">
+		select * from board where board_id = #{boardId}		
+	</select>
+	
+	
+	<insert id="boardInsert" parameterType="co.hj.prj.board.vo.BoardVO">
+		<selectKey resultType="int" keyProperty="boardId" order="BEFORE">
+			select case when max(board_Id) != 0 then max(board_id) + 1
+			else 1 end as id from board
+		</selectKey>
+		insert into board
+		values(
+			<if test="boardId != null">#{boardId}, </if>
+			<if test="boardName != null">#{boardName}, </if>
+			<if test="boardTitle != null">#{boardTitle}, </if>
+			<if test="boardContent != null">#{boardContent},</if>
+			<if test="boardDate != null">default,</if>
+			<if test="boardHit != null">0</if>
+		)
+	</insert>
+	
+	
+	<update id="boardUpdate" parameterType="co.hj.prj.board.vo.BoardVO">
+		update board
+		<set>
+			<if test="boardName != null">board_name = #{boardName},</if>
+			<if test="boardTitle != null">board_title = #{boardTitle},</if>
+			<if test="boardContent != null">board_content = #{boardContent},</if>
+		</set>
+		where board_id = #{boardId}
+	</update>
+	
+	
+	<delete id="boardDelete" parameterType="co.hj.prj.board.vo.BoardVO">
+		delete from board
+		where board_id = #{boardId}
+	</delete>
+	
+	
+	<update id="boardHitUpdate" parameterType="int">
+		update board
+		set board_hit = board_hit + 1
+		where board_id = #{boardId}
+	</update>
+	
+</mapper>

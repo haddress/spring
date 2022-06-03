@@ -19,28 +19,10 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-		<beans:property name="order" value="2"/>
 	</beans:bean>
 	
-	<!-- tiles Resolve 설정 -->
-	<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
-		id="urlBasedViewResolver">
-		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
-		<beans:property name="order" value="1"/>
-	</beans:bean>
 	
-	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-		<beans:property name="definitions" value="/WEB-INF/spring/tiles.xml"/>
-	</beans:bean>
-	
-	<!-- file upload Resolve -->
-	<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
-		<beans:property name="defaultEncoding" value="utf-8" />
-		<beans:property name="maxUploadSize" value="1073741824" />	
-		<beans:property name="maxInMemorySize" value="1073741824" />
-	</beans:bean>
-	
-	<context:component-scan base-package="co.micol.prj" />
+	<context:component-scan base-package="co.hj.prj" />
 	
 	
 	
