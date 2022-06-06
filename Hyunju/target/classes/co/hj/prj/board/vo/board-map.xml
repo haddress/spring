@@ -12,58 +12,53 @@
 	</resultMap>
 	
 	<select id="boardList" resultMap="boardMap">
-		select * from board
-		where
+		SELECT * FROM BOARD
+		WHERE
 		<if test="state == 1">1=1</if>
-		<if test="state == 2">board_title like '%'||#{key}||'%'</if>
-		<if test="state == 3">board_name like '%'||#{key}||'%'</if>
-		order by board_id desc
+		<if test="state == 2">(board_name || board_title || board_content) like '%'||#{key}||'%'</if>
+		<if test="state == 3">board_title like '%'||#{key}||'%'</if>
+		<if test="state == 4">board_name like '%'||#{key}||'%'</if>
+		<if test="state == 5">board_content like '%'||#{key}||'%'</if>
+		ORDER BY BOARD_ID DESC
 	</select>
 	
 	
 	<select id="boardSelect" resultMap="boardMap">
-		select * from board where board_id = #{boardId}		
+		SELECT * FROM BOARD WHERE BOARD_ID = #{boardId}		
 	</select>
 	
 	
 	<insert id="boardInsert" parameterType="co.hj.prj.board.vo.BoardVO">
 		<selectKey resultType="int" keyProperty="boardId" order="BEFORE">
-			select case when max(board_Id) != 0 then max(board_id) + 1
-			else 1 end as id from board
+			SELECT CASE WHEN MAX(board_Id) != 0 THEN MAX(board_id) + 1
+			ELSE 1 END AS ID FROM BOARD
 		</selectKey>
-		insert into board
-		values(
-			<if test="boardId != null">#{boardId}, </if>
-			<if test="boardName != null">#{boardName}, </if>
-			<if test="boardTitle != null">#{boardTitle}, </if>
-			<if test="boardContent != null">#{boardContent},</if>
-			<if test="boardDate != null">default,</if>
-			<if test="boardHit != null">0</if>
+		INSERT INTO BOARD
+		VALUES(
+			#{boardId}, #{boardName}, #{boardTitle}, #{boardContent}, SYSDATE, 0
 		)
 	</insert>
 	
 	
 	<update id="boardUpdate" parameterType="co.hj.prj.board.vo.BoardVO">
-		update board
+		UPDATE BOARD
 		<set>
-			<if test="boardName != null">board_name = #{boardName},</if>
-			<if test="boardTitle != null">board_title = #{boardTitle},</if>
-			<if test="boardContent != null">board_content = #{boardContent},</if>
+			<if test="boardName != null">BOARD_NAME = #{boardName},</if>
+			<if test="boardTitle != null">BOARD_TITLE = #{boardTitle},</if>
+			<if test="boardContent != null">BOARD_CONTENT = #{boardContent},</if>
 		</set>
-		where board_id = #{boardId}
+		WHERE BOARD_ID = #{boardId}
 	</update>
 	
 	
 	<delete id="boardDelete" parameterType="co.hj.prj.board.vo.BoardVO">
-		delete from board
-		where board_id = #{boardId}
+		DELETE FROM BOARD WHERE BOARD_ID = #{boardId}
 	</delete>
 	
-	
 	<update id="boardHitUpdate" parameterType="int">
-		update board
-		set board_hit = board_hit + 1
-		where board_id = #{boardId}
+		UPDATE BOARD
+		SET BOARD_HIT = BOARD_HIT + 1
+		WHERE BOARD_ID = #{boardId}
 	</update>
 	
 </mapper>

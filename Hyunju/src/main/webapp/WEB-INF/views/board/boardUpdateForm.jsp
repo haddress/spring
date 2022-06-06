@@ -18,6 +18,9 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 .label {
 	width: 90px;
 }
+#boardTitle {
+	width: 450px;
+}
 .trhe {
 	height: 40px;
 }
@@ -26,25 +29,29 @@ font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, '
 <body>
 	<div id="container" align="center">
 		<div>
-			<form id="frm" action="boardInsert.do" method="post">
+			<form id="frm" action="boardUpdate.do" method="post">
+				<input type="hidden" id="boardId" name="boardId" value="${board.boardId }">
 				<div>
 					<table width="1000">
 						<tr class="trhe">
 							<th class="label">작성자</th>
-							<td><input type="text" id="boardName" name="boardName" size="25"></td>
+							<td>${board.boardName }</td>
+							<th class="label">작성일자</th>
+							<td>${board.boardDate }</td>						
 						</tr>
 						<tr class="trhe">
-							<th class="label">제 목</th>
-							<td colspan="3"><input type="text" id="boardTitle" name="boardTitle" size="58"></td>
+							<th>제 목</th>
+							<td colspan="3">
+								<input type="text" id="boardTitle" name="boardTitle" size="58" value="${board.boardTitle }"></td>
 						</tr>
 						<tr>
-							<td colspan="4" style="padding:30px;"><textarea id="boardContent" name="boardContent" cols="130" rows="15"></textarea></td>
+							<td colspan="4" style="padding:30px;">
+								<textarea id="boardContent" name="boardContent" cols="130" rows="15">${board.boardContent }</textarea></td>
 						</tr>
 					</table>
 				</div>	
 				<div>
-					<input type="submit" value="등록">
-					<input type="reset" value="취소">
+					<input type="submit" value="수정">&nbsp;&nbsp;
 					<input type="button" value="목록" onclick="location.href='boardList.do'">
 				</div>
 			</form>

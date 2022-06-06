@@ -17,13 +17,12 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome! {}.", locale);
-		
-		return "home/home";
+		return "redirect:boardList.do";
 	}
 	
 	@RequestMapping("/home.do")
 	public String home() {
-		return "home/home";
+		return "redirect:boardList.do";
 	}
 	
 }

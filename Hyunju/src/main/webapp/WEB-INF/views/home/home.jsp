@@ -5,10 +5,7 @@
 	<title>Spring MVC Test</title>
 </head>
 <body>
-	<div align="center">
-		<h1>Hyunju</h1>
-		<a href="boardList.do">게시판</a>
-	</div>
+	<jsp:forward page="boardList.do"></jsp:forward>
 
 </body>
 </html>

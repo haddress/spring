@@ -22,22 +22,22 @@ public class BoardController {
 	// 게시글 전체조회
 	@RequestMapping("/boardList.do")
 	public String boardList(Model model) {
-		model.addAttribute("boards", boardDAO.boardList(1, "전체글"));
+		model.addAttribute("boards", boardDAO.boardList(1, "전체"));
 		return "board/boardList";
 	}
 	
 	// 게시글 한 건 상세조회
-	@PostMapping("/boardDetail.do")
+	@RequestMapping("/boardDetail.do")
 	public String boardDetail(BoardVO vo, Model model) {
 		boardDAO.boardHitUpdate(vo.getBoardId());
-		model.addAttribute("content", boardDAO.boardSelect(vo));
+		model.addAttribute("b", boardDAO.boardSelect(vo));
 		return "board/boardDetail";
 	}
 	
 	// 게시글 검색
-	@PostMapping("ajaxSearchList.do")
+	@PostMapping("cateSearchList.do")
 	@ResponseBody
-	public List<BoardVO> ajaxSearchList(@RequestParam("state") int state, @RequestParam("key") String key) {
+	public List<BoardVO> cateSearchList(@RequestParam("state") int state, @RequestParam("key") String key) {
 		return boardDAO.boardList(state, key);
 	}
 	
